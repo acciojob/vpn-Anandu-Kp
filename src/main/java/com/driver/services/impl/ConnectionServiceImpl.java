@@ -8,8 +8,6 @@ import com.driver.services.ConnectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class ConnectionServiceImpl implements ConnectionService {
     @Autowired
@@ -21,14 +19,30 @@ public class ConnectionServiceImpl implements ConnectionService {
 
     @Override
     public User connect(int userId, String countryName) throws Exception{
+        User user=userRepository2.findById(userId).get();
+        if(!user.isConnected())
+        {
+            throw new Exception("Already connected");
+        }
+        if(user.getCountry().getCountryName().toString()==countryName)
+        {
+            return user;
+        }
+
+
+
+        return user;
+    }
+    @Override
+    public User disconnect ( int userId) throws Exception {
+        User user=userRepository2.findById(userId).get();
+        return user;
 
     }
     @Override
-    public User disconnect(int userId) throws Exception {
-
-    }
-    @Override
-    public User communicate(int senderId, int receiverId) throws Exception {
+    public User communicate ( int senderId, int receiverId) throws Exception {
+        User user=new User();
+        return user;
 
     }
 }
